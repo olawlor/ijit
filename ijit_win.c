@@ -32,14 +32,15 @@ int main() {
 	/* Allocate executable area to store JIT code: */
 	
 	struct ijit_code *code=(struct ijit_code *)VirtualAlloc(
-		(void *)0x3badc000, /* pointer to base address of new jit_code structure */
-		4096, /* bytes of code to run */
+		(void *)0x3bad0000, /* pointer to base address of new jit_code structure */
+		65536, /* bytes of code to run */
 		MEM_COMMIT | MEM_RESERVE,
 		PAGE_EXECUTE_READWRITE /* allow anything: RWX */
 	);
 	if (code==(struct ijit_code *)0) {
 		printf("VirtualAlloc failed"); exit(1);
 	}
+	code=(void *)0x3badc000; /* <- make up for Windows 64KB rounding */
 	
 	/* Set up structure */
 	code->interp=0; 
@@ -49,7 +50,7 @@ int main() {
 	if (1!=scanf("%s",code->name)) {
 		printf("ERROR in scanf.  Exiting.\n"); exit(1);
 	}
-	printf("Loaded name %s (%zd bytes)\n", code->name, strlen(code->name));
+	printf("Loaded name %s (%ld bytes)\n", code->name, strlen(code->name));
 	
 	/* Run the code */
 	if (code->interp) {
